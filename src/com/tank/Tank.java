@@ -2,7 +2,7 @@ package com.tank;
 
 import java.awt.*;
 
-import static com.tank.DIR.DOWN;
+import static com.tank.DIR.UP;
 
 public class Tank {
     int x = 200, y = 200;
