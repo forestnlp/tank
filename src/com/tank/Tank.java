@@ -9,11 +9,30 @@ public class Tank {
 
     DIR dir = UP;
 
-    static final int speed = 5;
+    TankFrame frame;
+
+    public Tank(int x, int y, DIR dir, TankFrame frame) {
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.frame = frame;
+    }
+
+    boolean moving = false;
+
+    static final int speed = 15;
 
     public void paint(Graphics g) {
-        System.out.println("paint");
+        Color c = g.getColor();
+        g.setColor(Color.red);
         g.fillRect(x, y, 50, 50);
+        g.setColor(c);
+        move();
+    }
+
+    private void move() {
+        if (!moving) return;
+
         switch (dir) {
             case LEFT:
                 x -= speed;
@@ -52,5 +71,17 @@ public class Tank {
 
     public void setDir(DIR dir) {
         this.dir = dir;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+
+    public void fire() {
+        frame.bullets.add(new Bullet(this.x,this.y,dir,frame));
     }
 }

@@ -5,12 +5,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import static com.tank.DIR.*;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank();
+    Tank myTank = new Tank(50,50,UP,this);
+    java.util.List<Bullet> bullets = new ArrayList<>();
+
+    static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
     public TankFrame() throws HeadlessException {
         setSize(800, 600);
@@ -29,6 +33,27 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
+        Color c = g.getColor();
+        g.setColor(Color.red);
+        g.drawString("bullets:"+bullets.size(),100,100);
+        g.setColor(c);
+        for(int i=0;i<bullets.size();i++)
+            bullets.get(i).paint(g);
+    }
+
+    Image offScreenImage = null;
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage==null)
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
+
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.black);
+        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage,0,0,null);
     }
 
     class MyKeyListner extends KeyAdapter {
@@ -36,7 +61,6 @@ public class TankFrame extends Frame {
         @Override
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
-            System.out.println(keyCode);
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
                     L = true;
@@ -59,7 +83,6 @@ public class TankFrame extends Frame {
         @Override
         public void keyReleased(KeyEvent e) {
             int keyCode = e.getKeyCode();
-            System.out.println(keyCode);
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
                     L = false;
@@ -73,6 +96,9 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     D = false;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
+                    break;
                 default:
                     break;
             }
@@ -80,10 +106,15 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
-            if (U) myTank.setDir(UP);
-            if (D) myTank.setDir(DOWN);
-            if (L) myTank.setDir(LEFT);
-            if (R) myTank.setDir(RIGHT);
+            if(!U&&!D&&!L&&!R) myTank.setMoving(false);
+            else {
+                if (U) myTank.setDir(UP);
+                if (D) myTank.setDir(DOWN);
+                if (L) myTank.setDir(LEFT);
+                if (R) myTank.setDir(RIGHT);
+                myTank.setMoving(true);
+            }
+
         }
     }
 }
