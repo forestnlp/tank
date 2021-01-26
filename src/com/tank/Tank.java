@@ -7,7 +7,7 @@ import static com.tank.DIR.DOWN;
 public class Tank {
     int x = 200, y = 200;
 
-    DIR dir = DOWN;
+    DIR dir = UP;
 
     static final int speed = 5;
 
