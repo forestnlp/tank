@@ -8,7 +8,7 @@ public class Main {
         TankFrame frame = new TankFrame();
 
         for(int i=0;i<5;i++)
-            frame.tanks.add(new Tank(100+50*i,100,DOWN,frame));
+            frame.tanks.add(new Tank(100+50*i,100,DOWN,frame,Group.bad));
 
         while (true){
             Thread.sleep(50);

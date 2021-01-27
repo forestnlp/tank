@@ -9,16 +9,18 @@ public class Bullet {
     public static final int speed = 20;
     public static final int WIDTH = ResourceMgr.bulletd.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletd.getHeight();
+    private Group group;
     DIR dir = UP;
     TankFrame frame = null;
 
     boolean living = true;
 
-    public Bullet(int x, int y, DIR dir,TankFrame frame) {
+    public Bullet(int x, int y, DIR dir,TankFrame frame,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.frame = frame;
+        this.group = group;
     }
 
     public void paint(Graphics g) {
@@ -65,9 +67,10 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
+        //Rectangle 单例优化
         Rectangle rec1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
         Rectangle rec2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-        if(rec1.intersects(rec2)) {
+        if(rec1.intersects(rec2)&&this.group!=tank.getGroup()) {
             tank.die();
             this.die();
         }
