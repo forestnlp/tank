@@ -2,14 +2,17 @@ package com.tank;
 
 import java.awt.*;
 
+import static com.tank.DIR.UP;
+
 public class Bullet {
     int x, y;
-    public static final int speed = 25;
-    public static final int WIDTH = 20, HEIGHT = 20;
-    DIR dir = DIR.UP;
+    public static final int speed = 20;
+    public static final int WIDTH = ResourceMgr.bulletd.getWidth();
+    public static final int HEIGHT = ResourceMgr.bulletd.getHeight();
+    DIR dir = UP;
     TankFrame frame = null;
 
-    boolean isAlive = true;
+    boolean living = true;
 
     public Bullet(int x, int y, DIR dir,TankFrame frame) {
         this.x = x;
@@ -19,7 +22,7 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        if(!isAlive) frame.bullets.remove(this);
+        if(!living) frame.bullets.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
         switch (dir){
@@ -37,7 +40,8 @@ public class Bullet {
                 break;
             default:
                 break;
-        }        g.setColor(c);
+        }
+        g.setColor(c);
         move();
     }
 
@@ -57,7 +61,20 @@ public class Bullet {
                 break;
         }
 
-        if(x<0||y<0||x>frame.GAME_WIDTH||y>frame.GAME_HEIGHT) isAlive=false;
+        if(x<0||y<0||x>frame.GAME_WIDTH||y>frame.GAME_HEIGHT) living =false;
+    }
+
+    public void collideWith(Tank tank) {
+        Rectangle rec1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
+        Rectangle rec2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
+        if(rec1.intersects(rec2)) {
+            tank.die();
+            this.die();
+        }
+    }
+
+    private void die() {
+        this.living=false;
     }
 }
 

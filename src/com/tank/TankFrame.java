@@ -5,14 +5,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static com.tank.DIR.*;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(50,50,UP,this);
-    java.util.List<Bullet> bullets = new ArrayList<>();
+    Tank myTank = new Tank(200,400,UP,this);
+
+    java.util.List<Tank> tanks = new LinkedList<>();
+
+    java.util.List<Bullet> bullets = new LinkedList<>();
 
     static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
@@ -39,6 +42,13 @@ public class TankFrame extends Frame {
         g.setColor(c);
         for(int i=0;i<bullets.size();i++)
             bullets.get(i).paint(g);
+
+        for(int i=0;i<tanks.size();i++)
+            tanks.get(i).paint(g);
+
+        for(int i=0;i<bullets.size();i++)
+            for(int k=0;k<tanks.size();k++)
+                bullets.get(i).collideWith(tanks.get(k));
     }
 
     Image offScreenImage = null;
@@ -114,7 +124,6 @@ public class TankFrame extends Frame {
                 if (R) myTank.setDir(RIGHT);
                 myTank.setMoving(true);
             }
-
         }
     }
 }

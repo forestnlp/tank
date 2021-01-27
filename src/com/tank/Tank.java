@@ -5,7 +5,13 @@ import java.awt.*;
 import static com.tank.DIR.UP;
 
 public class Tank {
-    int x = 200, y = 200;
+
+    private int x , y ;
+
+    public static final int WIDTH = ResourceMgr.tankd.getWidth();
+    public static final int HEIGHT = ResourceMgr.tankd.getHeight();
+
+    private boolean living = true;
 
     DIR dir = UP;
 
@@ -20,9 +26,10 @@ public class Tank {
 
     boolean moving = false;
 
-    static final int speed = 15;
+    static final int speed = 10;
 
     public void paint(Graphics g) {
+        if(!this.living) frame.tanks.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
         switch (dir){
@@ -97,6 +104,12 @@ public class Tank {
     }
 
     public void fire() {
-        frame.bullets.add(new Bullet(this.x,this.y,dir,frame));
+        int bX = this.x + Tank.WIDTH/2-Bullet.WIDTH/2;
+        int bY = this.y + Tank.HEIGHT/2-Bullet.HEIGHT/2;
+        frame.bullets.add(new Bullet(bX,bY,dir,frame));
+    }
+
+    public void die() {
+        this.living=false;
     }
 }
