@@ -22,8 +22,22 @@ public class Bullet {
         if(!isAlive) frame.bullets.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletl,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletr,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletu,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletd,x,y,null);
+                break;
+            default:
+                break;
+        }        g.setColor(c);
         move();
     }
 
