@@ -12,12 +12,9 @@ import static com.tank.DIR.*;
 public class TankFrame extends Frame {
 
     Tank myTank = new Tank(200,400,UP,this,Group.good);
-
     java.util.List<Tank> tanks = new LinkedList<>();
-
     java.util.List<Bullet> bullets = new LinkedList<>();
-
-
+    Explode e = new Explode(100,100,this);
 
     static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
@@ -51,6 +48,8 @@ public class TankFrame extends Frame {
         for(int i=0;i<bullets.size();i++)
             for(int k=0;k<tanks.size();k++)
                 bullets.get(i).collideWith(tanks.get(k));
+
+        e.paint(g);
     }
 
     Image offScreenImage = null;

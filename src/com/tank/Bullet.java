@@ -67,10 +67,11 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
+        if(this.group==tank.getGroup()) return;
         //Rectangle 单例优化
         Rectangle rec1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
         Rectangle rec2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-        if(rec1.intersects(rec2)&&this.group!=tank.getGroup()) {
+        if(rec1.intersects(rec2)) {
             tank.die();
             this.die();
         }
