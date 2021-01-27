@@ -9,8 +9,8 @@ public class Tank {
 
     private int x , y ;
 
-    public static final int WIDTH = ResourceMgr.tankd.getWidth();
-    public static final int HEIGHT = ResourceMgr.tankd.getHeight();
+    public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
+    public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
 
     private boolean living = true;
     private Group group;
@@ -48,16 +48,16 @@ public class Tank {
         g.setColor(Color.red);
         switch (dir){
             case LEFT:
-                g.drawImage(ResourceMgr.tankl,x,y,null);
+                g.drawImage(this.group==Group.good?ResourceMgr.goodTankL:ResourceMgr.badTankL,x,y,null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankr,x,y,null);
+                g.drawImage(this.group==Group.good?ResourceMgr.goodTankR:ResourceMgr.badTankR,x,y,null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tanku,x,y,null);
+                g.drawImage(this.group==Group.good?ResourceMgr.goodTankU:ResourceMgr.badTankU,x,y,null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankd,x,y,null);
+                g.drawImage(this.group==Group.good?ResourceMgr.goodTankD:ResourceMgr.badTankD,x,y,null);
                 break;
             default:
                 break;

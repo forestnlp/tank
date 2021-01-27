@@ -19,7 +19,7 @@ public class TankFrame extends Frame {
     static final int GAME_WIDTH=1080,GAME_HEIGHT=960;
 
     public TankFrame() throws HeadlessException {
-        setSize(800, 600);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);
         setTitle("tank war");
         setVisible(true);

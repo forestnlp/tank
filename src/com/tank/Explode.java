@@ -24,7 +24,10 @@ public class Explode {
     }
 
     public void paint(Graphics g) {
-        g.drawImage(ResourceMgr.explodes[step++],x,y,null);
+        int eX = this.x + Tank.WIDTH/2-Explode.WIDTH/2;
+        int eY = this.y + Tank.HEIGHT/2-Explode.HEIGHT/2;
+
+        g.drawImage(ResourceMgr.explodes[step++],eX,eY,null);
         if(step>=ResourceMgr.explodes.length)
             frame.explodes.remove(this);
     }

@@ -7,8 +7,8 @@ import static com.tank.DIR.UP;
 public class Bullet {
     int x, y;
     public static final int speed = 20;
-    public static final int WIDTH = ResourceMgr.bulletd.getWidth();
-    public static final int HEIGHT = ResourceMgr.bulletd.getHeight();
+    public static final int WIDTH = ResourceMgr.bulletU.getWidth();
+    public static final int HEIGHT = ResourceMgr.bulletU.getHeight();
     private Group group;
     DIR dir = UP;
     TankFrame frame = null;
@@ -29,16 +29,16 @@ public class Bullet {
         g.setColor(Color.red);
         switch (dir){
             case LEFT:
-                g.drawImage(ResourceMgr.bulletl,x,y,null);
+                g.drawImage(ResourceMgr.bulletL,x,y,null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletr,x,y,null);
+                g.drawImage(ResourceMgr.bulletR,x,y,null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletu,x,y,null);
+                g.drawImage(ResourceMgr.bulletU,x,y,null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletd,x,y,null);
+                g.drawImage(ResourceMgr.bulletD,x,y,null);
                 break;
             default:
                 break;
