@@ -14,9 +14,9 @@ public class TankFrame extends Frame {
     Tank myTank = new Tank(200,400,UP,this,Group.good);
     java.util.List<Tank> tanks = new LinkedList<>();
     java.util.List<Bullet> bullets = new LinkedList<>();
-    Explode e = new Explode(100,100,this);
+    java.util.List<Explode> explodes = new LinkedList<>();
 
-    static final int GAME_WIDTH=800,GAME_HEIGHT=600;
+    static final int GAME_WIDTH=1080,GAME_HEIGHT=960;
 
     public TankFrame() throws HeadlessException {
         setSize(800, 600);
@@ -37,7 +37,7 @@ public class TankFrame extends Frame {
         myTank.paint(g);
         Color c = g.getColor();
         g.setColor(Color.red);
-        g.drawString("bullets:"+bullets.size()+",tanks:"+tanks.size(),100,100);
+        g.drawString("bullets:"+bullets.size()+",tanks:"+tanks.size()+",explodes:"+explodes.size(),100,100);
         g.setColor(c);
         for(int i=0;i<bullets.size();i++)
             bullets.get(i).paint(g);
@@ -49,7 +49,8 @@ public class TankFrame extends Frame {
             for(int k=0;k<tanks.size();k++)
                 bullets.get(i).collideWith(tanks.get(k));
 
-        e.paint(g);
+        for(int i=0;i<explodes.size();i++)
+            explodes.get(i).paint(g);
     }
 
     Image offScreenImage = null;

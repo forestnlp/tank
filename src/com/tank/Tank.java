@@ -29,7 +29,7 @@ public class Tank {
 
     boolean moving = true;
 
-    static final int speed = 10;
+    static final int speed = 5;
 
     private Random random = new Random();
     public Tank(int x, int y, DIR dir, TankFrame frame,Group group) {
@@ -83,7 +83,14 @@ public class Tank {
                 y += speed;
                 break;
         }
-        if(random.nextInt(10)>8) fire();
+        if(group==Group.bad&&random.nextInt(100)>95)
+            fire();
+        if(group==Group.bad&&random.nextInt(100)>95)
+            randomDir();
+    }
+
+    private void randomDir() {
+        dir = DIR.values()[random.nextInt(4)];
     }
 
     public int getX() {

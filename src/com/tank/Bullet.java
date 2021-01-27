@@ -74,6 +74,7 @@ public class Bullet {
         if(rec1.intersects(rec2)) {
             tank.die();
             this.die();
+            frame.explodes.add(new Explode(x,y,frame));
         }
     }
 
