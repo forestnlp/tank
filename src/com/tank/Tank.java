@@ -40,8 +40,6 @@ public class Tank {
         this.group = group;
     }
 
-
-
     public void paint(Graphics g) {
         if(!this.living) frame.tanks.remove(this);
         Color c = g.getColor();
@@ -87,6 +85,15 @@ public class Tank {
             fire();
         if(group==Group.bad&&random.nextInt(100)>95)
             randomDir();
+
+        boundsCheck();
+    }
+
+    private void boundsCheck() {
+        if(x<0) x=0;
+        if(y<30) y=30;
+        if(x>frame.GAME_WIDTH-Tank.WIDTH) x = frame.GAME_WIDTH-Tank.WIDTH;
+        if(y>frame.GAME_HEIGHT-Tank.HEIGHT) y = frame.GAME_HEIGHT-Tank.HEIGHT;
     }
 
     private void randomDir() {

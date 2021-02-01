@@ -1,7 +1,5 @@
 package com.tank;
 
-import test.ImageTest;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class ResourceMgr {
             bulletD = ImageUtil.rotateImage(bulletU, 180);
 
             for(int i=1;i<=16;i++) {
-                explodes[i-1] = ImageIO.read(ImageTest.class.getClassLoader().getResourceAsStream("images/e" +i+".gif"));
+                explodes[i-1] = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/e" +i+".gif"));
             }
         }
         catch (IOException e) {
