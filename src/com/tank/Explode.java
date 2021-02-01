@@ -20,7 +20,7 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.frame = frame;
-        //expoldeAudio.play();
+        new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
     public void paint(Graphics g) {
