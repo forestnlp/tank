@@ -13,6 +13,8 @@ public class Bullet {
     DIR dir = UP;
     TankFrame frame = null;
 
+    Rectangle rec = new Rectangle();
+
     boolean living = true;
 
     public Bullet(int x, int y, DIR dir,TankFrame frame,Group group) {
@@ -21,6 +23,10 @@ public class Bullet {
         this.dir = dir;
         this.frame = frame;
         this.group = group;
+        rec.x = this.x;
+        rec.y = this.y;
+        rec.width = WIDTH;
+        rec.height = HEIGHT;
     }
 
     public void paint(Graphics g) {
@@ -62,16 +68,16 @@ public class Bullet {
                 y += speed;
                 break;
         }
-
-        if(x<0||y<0||x>frame.GAME_WIDTH||y>frame.GAME_HEIGHT) living =false;
+        rec.x = this.x;
+        rec.y = this.y;
+        if(x<0||y<0||x>frame.GAME_WIDTH||y>frame.GAME_HEIGHT)
+            die();
     }
 
     public void collideWith(Tank tank) {
         if(this.group==tank.getGroup()) return;
         //Rectangle 单例优化
-        Rectangle rec1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
-        Rectangle rec2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-        if(rec1.intersects(rec2)) {
+        if(rec.intersects(tank.rec)) {
             tank.die();
             this.die();
             frame.explodes.add(new Explode(x,y,frame));
