@@ -1,5 +1,9 @@
 package com.tank;
 
+import com.tank.factory.BaseExplode;
+import com.tank.factory.DefaultFactory;
+import com.tank.factory.GameFactory;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,9 +18,11 @@ public class TankFrame extends Frame {
     Tank myTank = new Tank(200,400,UP,this,Group.good);
     java.util.List<Tank> tanks = new LinkedList<>();
     java.util.List<Bullet> bullets = new LinkedList<>();
-    java.util.List<Explode> explodes = new LinkedList<>();
+    java.util.List<BaseExplode> explodes = new LinkedList<>();
 
     static final int GAME_WIDTH=1080,GAME_HEIGHT=960;
+
+    GameFactory factory = new DefaultFactory();
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);

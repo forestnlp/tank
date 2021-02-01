@@ -1,11 +1,13 @@
 package com.tank;
 
+import com.tank.factory.BaseExplode;
+
 import java.awt.*;
 import java.util.Random;
 
 import static com.tank.ResourceMgr.expoldeAudio;
 
-public class Explode {
+public class Explode extends BaseExplode {
 
     private int x , y ;
 

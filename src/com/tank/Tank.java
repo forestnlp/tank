@@ -7,7 +7,7 @@ import static com.tank.DIR.UP;
 
 public class Tank {
 
-    private int x , y ;
+    private int x, y;
 
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -33,8 +33,11 @@ public class Tank {
 
     static final int speed = 5;
 
+    FireStrategy fireStrategy;
+
     private Random random = new Random();
-    public Tank(int x, int y, DIR dir, TankFrame frame,Group group) {
+
+    public Tank(int x, int y, DIR dir, TankFrame frame, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -44,24 +47,42 @@ public class Tank {
         rec.y = this.y;
         rec.width = WIDTH;
         rec.height = HEIGHT;
+
+        if (group == Group.bad) {
+            String badFsName = (String) PropertyMgr.get("badfireStrategy");
+            try {
+                FireStrategy strategy = (FireStrategy) Class.forName(badFsName).newInstance();
+                fireStrategy = strategy;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            String goodFsName = (String) PropertyMgr.get("goodfireStrategy");
+            try {
+                FireStrategy strategy = (FireStrategy) Class.forName(goodFsName).newInstance();
+                fireStrategy = strategy;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void paint(Graphics g) {
-        if(!this.living) frame.tanks.remove(this);
+        if (!this.living) frame.tanks.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
-        switch (dir){
+        switch (dir) {
             case LEFT:
-                g.drawImage(this.group==Group.good?ResourceMgr.goodTankL:ResourceMgr.badTankL,x,y,null);
+                g.drawImage(this.group == Group.good ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group==Group.good?ResourceMgr.goodTankR:ResourceMgr.badTankR,x,y,null);
+                g.drawImage(this.group == Group.good ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group==Group.good?ResourceMgr.goodTankU:ResourceMgr.badTankU,x,y,null);
+                g.drawImage(this.group == Group.good ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group==Group.good?ResourceMgr.goodTankD:ResourceMgr.badTankD,x,y,null);
+                g.drawImage(this.group == Group.good ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
             default:
                 break;
@@ -88,9 +109,9 @@ public class Tank {
                 break;
         }
 
-        if(group==Group.bad&&random.nextInt(100)>95)
+        if (group == Group.bad && random.nextInt(100) > 95)
             fire();
-        if(group==Group.bad&&random.nextInt(100)>95)
+        if (group == Group.bad && random.nextInt(100) > 95)
             randomDir();
 
         boundsCheck();
@@ -99,10 +120,10 @@ public class Tank {
     }
 
     private void boundsCheck() {
-        if(x<0) x=0;
-        if(y<30) y=30;
-        if(x>frame.GAME_WIDTH-Tank.WIDTH) x = frame.GAME_WIDTH-Tank.WIDTH;
-        if(y>frame.GAME_HEIGHT-Tank.HEIGHT) y = frame.GAME_HEIGHT-Tank.HEIGHT;
+        if (x < 0) x = 0;
+        if (y < 30) y = 30;
+        if (x > frame.GAME_WIDTH - Tank.WIDTH) x = frame.GAME_WIDTH - Tank.WIDTH;
+        if (y > frame.GAME_HEIGHT - Tank.HEIGHT) y = frame.GAME_HEIGHT - Tank.HEIGHT;
     }
 
     private void randomDir() {
@@ -142,12 +163,10 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2-Bullet.WIDTH/2;
-        int bY = this.y + Tank.HEIGHT/2-Bullet.HEIGHT/2;
-        frame.bullets.add(new Bullet(bX,bY,dir,frame,this.group));
+        fireStrategy.fire(this);
     }
 
     public void die() {
-        this.living=false;
+        this.living = false;
     }
 }

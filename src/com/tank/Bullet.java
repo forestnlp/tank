@@ -27,6 +27,7 @@ public class Bullet {
         rec.y = this.y;
         rec.width = WIDTH;
         rec.height = HEIGHT;
+        frame.bullets.add(this);
     }
 
     public void paint(Graphics g) {
@@ -80,7 +81,7 @@ public class Bullet {
         if(rec.intersects(tank.rec)) {
             tank.die();
             this.die();
-            frame.explodes.add(new Explode(x,y,frame));
+            frame.explodes.add(frame.factory.createExplode(tank.getX(),tank.getY(),frame));
         }
     }
 
