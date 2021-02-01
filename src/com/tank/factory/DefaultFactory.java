@@ -1,6 +1,7 @@
 package com.tank.factory;
 
 import com.tank.Explode;
+import com.tank.RectExplode;
 import com.tank.TankFrame;
 
 public class DefaultFactory extends GameFactory {
