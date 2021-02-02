@@ -7,7 +7,7 @@ import java.awt.*;
 
 import static com.tank.DIR.UP;
 
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     int x, y;
     public static final int speed = 20;
     public static final int WIDTH = ResourceMgr.bulletU.getWidth();
@@ -20,7 +20,7 @@ public class Bullet extends BaseBullet {
 
     boolean living = true;
 
-    public Bullet(int x, int y, DIR dir,TankFrame frame,Group group) {
+    public RectBullet(int x, int y, DIR dir, TankFrame frame, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -36,23 +36,8 @@ public class Bullet extends BaseBullet {
     public void paint(Graphics g) {
         if(!living) frame.bullets.remove(this);
         Color c = g.getColor();
-        g.setColor(Color.red);
-        switch (dir){
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL,x,y,null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR,x,y,null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.bulletU,x,y,null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD,x,y,null);
-                break;
-            default:
-                break;
-        }
+        g.setColor(Color.BLUE);
+        g.fillRect(x,y,20,20);
         g.setColor(c);
         move();
     }
@@ -80,6 +65,7 @@ public class Bullet extends BaseBullet {
 
     public void collideWith(BaseTank tank) {
         if(this.group==tank.getGroup()) return;
+
         //Rectangle 单例优化
         if(rec.intersects(tank.rec)) {
             tank.die();

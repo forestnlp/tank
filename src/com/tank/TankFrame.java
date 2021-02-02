@@ -1,8 +1,6 @@
 package com.tank;
 
-import com.tank.factory.BaseExplode;
-import com.tank.factory.DefaultFactory;
-import com.tank.factory.GameFactory;
+import com.tank.factory.*;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -16,8 +14,8 @@ import static com.tank.DIR.*;
 public class TankFrame extends Frame {
 
     Tank myTank = new Tank(200,400,UP,this,Group.good);
-    java.util.List<Tank> tanks = new LinkedList<>();
-    java.util.List<Bullet> bullets = new LinkedList<>();
+    java.util.List<BaseTank> tanks = new LinkedList<>();
+    java.util.List<BaseBullet> bullets = new LinkedList<>();
     java.util.List<BaseExplode> explodes = new LinkedList<>();
 
     static final int GAME_WIDTH=1080,GAME_HEIGHT=960;
