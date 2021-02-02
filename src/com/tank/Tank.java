@@ -33,7 +33,10 @@ public class Tank {
 
     static final int speed = 5;
 
+    FireStrategy fireStrategy;
+
     private Random random = new Random();
+
     public Tank(int x, int y, DIR dir, TankFrame frame,Group group) {
         this.x = x;
         this.y = y;
@@ -44,6 +47,10 @@ public class Tank {
         rec.y = this.y;
         rec.width = WIDTH;
         rec.height = HEIGHT;
+        if(this.getGroup() == Group.bad)
+            fireStrategy = new DefaultFireStrategy();
+        else
+            fireStrategy = new FourDirFireStrategy();
     }
 
     public void paint(Graphics g) {
@@ -142,9 +149,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2-Bullet.WIDTH/2;
-        int bY = this.y + Tank.HEIGHT/2-Bullet.HEIGHT/2;
-        frame.bullets.add(new Bullet(bX,bY,dir,frame,this.group));
+        fireStrategy.fire(this);
     }
 
     public void die() {
