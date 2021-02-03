@@ -12,14 +12,14 @@ public class Explode {
     public static final int WIDTH = ResourceMgr.explodes[0].getWidth();
     public static final int HEIGHT = ResourceMgr.explodes[0].getHeight();
 
-    TankFrame frame;
+    GameModel gm;
 
     private  int step = 0;
 
-    public Explode(int x, int y, TankFrame frame) {
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.frame = frame;
+        this.gm = gm;
         new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
@@ -29,7 +29,7 @@ public class Explode {
 
         g.drawImage(ResourceMgr.explodes[step++],eX,eY,null);
         if(step>=ResourceMgr.explodes.length)
-            frame.explodes.remove(this);
+            gm.explodes.remove(this);
     }
 
 }

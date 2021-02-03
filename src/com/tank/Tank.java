@@ -27,7 +27,7 @@ public class Tank {
         this.group = group;
     }
 
-    TankFrame frame;
+    GameModel gm;
 
     boolean moving = true;
 
@@ -37,11 +37,11 @@ public class Tank {
 
     private Random random = new Random();
 
-    public Tank(int x, int y, DIR dir, TankFrame frame,Group group) {
+    public Tank(int x, int y, DIR dir, GameModel model,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.frame = frame;
+        this.gm = model;
         this.group = group;
         rec.x = this.x;
         rec.y = this.y;
@@ -53,8 +53,9 @@ public class Tank {
             fireStrategy = new FourDirFireStrategy();
     }
 
+
     public void paint(Graphics g) {
-        if(!this.living) frame.tanks.remove(this);
+        if(!this.living) gm.tanks.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
         switch (dir){
@@ -104,12 +105,11 @@ public class Tank {
         rec.x = this.x;
         rec.y = this.y;
     }
-
     private void boundsCheck() {
         if(x<0) x=0;
         if(y<30) y=30;
-        if(x>frame.GAME_WIDTH-Tank.WIDTH) x = frame.GAME_WIDTH-Tank.WIDTH;
-        if(y>frame.GAME_HEIGHT-Tank.HEIGHT) y = frame.GAME_HEIGHT-Tank.HEIGHT;
+        if(x>TankFrame.GAME_WIDTH-Tank.WIDTH) x = TankFrame.GAME_WIDTH-Tank.WIDTH;
+        if(y>TankFrame.GAME_HEIGHT-Tank.HEIGHT) y = TankFrame.GAME_HEIGHT-Tank.HEIGHT;
     }
 
     private void randomDir() {

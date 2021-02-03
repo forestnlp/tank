@@ -5,18 +5,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.LinkedList;
 
 import static com.tank.DIR.*;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200,400,UP,this,Group.good);
-    java.util.List<Tank> tanks = new LinkedList<>();
-    java.util.List<Bullet> bullets = new LinkedList<>();
-    java.util.List<Explode> explodes = new LinkedList<>();
-
     static final int GAME_WIDTH=1080,GAME_HEIGHT=960;
+
+    GameModel gm = new GameModel();
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -32,25 +28,10 @@ public class TankFrame extends Frame {
         addKeyListener(new MyKeyListner());
     }
 
+
     @Override
     public void paint(Graphics g) {
-        myTank.paint(g);
-        Color c = g.getColor();
-        g.setColor(Color.red);
-        g.drawString("bullets:"+bullets.size()+",tanks:"+tanks.size()+",explodes:"+explodes.size(),100,100);
-        g.setColor(c);
-        for(int i=0;i<bullets.size();i++)
-            bullets.get(i).paint(g);
-
-        for(int i=0;i<tanks.size();i++)
-            tanks.get(i).paint(g);
-
-        for(int i=0;i<bullets.size();i++)
-            for(int k=0;k<tanks.size();k++)
-                bullets.get(i).collideWith(tanks.get(k));
-
-        for(int i=0;i<explodes.size();i++)
-            explodes.get(i).paint(g);
+        gm.paint(g);
     }
 
     Image offScreenImage = null;
@@ -109,7 +90,7 @@ public class TankFrame extends Frame {
                     D = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    gm.getMainTank().fire();
                     break;
                 default:
                     break;
@@ -118,6 +99,9 @@ public class TankFrame extends Frame {
         }
 
         private void setMainTankDir() {
+
+            Tank myTank = gm.getMainTank();
+
             if(!U&&!D&&!L&&!R) myTank.setMoving(false);
             else {
                 if (U) myTank.setDir(UP);

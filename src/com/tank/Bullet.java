@@ -11,17 +11,17 @@ public class Bullet {
     public static final int HEIGHT = ResourceMgr.bulletU.getHeight();
     private Group group;
     DIR dir = UP;
-    TankFrame frame = null;
+    GameModel gm;
 
     Rectangle rec = new Rectangle();
 
     boolean living = true;
 
-    public Bullet(int x, int y, DIR dir,TankFrame frame,Group group) {
+    public Bullet(int x, int y, DIR dir,GameModel gm,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.frame = frame;
+        this.gm = gm;
         this.group = group;
         rec.x = this.x;
         rec.y = this.y;
@@ -30,7 +30,7 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        if(!living) frame.bullets.remove(this);
+        if(!living) gm.bullets.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
         switch (dir){
@@ -70,7 +70,7 @@ public class Bullet {
         }
         rec.x = this.x;
         rec.y = this.y;
-        if(x<0||y<0||x>frame.GAME_WIDTH||y>frame.GAME_HEIGHT)
+        if(x<0||y<0||x>TankFrame.GAME_WIDTH||y>TankFrame.GAME_HEIGHT)
             die();
     }
 
@@ -80,7 +80,7 @@ public class Bullet {
         if(rec.intersects(tank.rec)) {
             tank.die();
             this.die();
-            frame.explodes.add(new Explode(x,y,frame));
+            gm.explodes.add(new Explode(x,y,gm));
         }
     }
 
