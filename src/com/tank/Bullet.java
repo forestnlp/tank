@@ -74,14 +74,16 @@ public class Bullet extends GameObject{
             die();
     }
 
-    public void collideWith(Tank tank) {
-        if(this.group==tank.getGroup()) return;
+    public boolean collideWith(Tank tank) {
+        if(this.group==tank.getGroup()) return false;
         //Rectangle 单例优化
         if(rec.intersects(tank.rec)) {
             tank.die();
             this.die();
             gm.gameObjects.add(new Explode(x,y,gm));
+            return true;
         }
+        return false;
     }
 
     private void die() {
