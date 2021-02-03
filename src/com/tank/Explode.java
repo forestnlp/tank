@@ -5,7 +5,7 @@ import java.util.Random;
 
 import static com.tank.ResourceMgr.expoldeAudio;
 
-public class Explode {
+public class Explode extends GameObject{
 
     private int x , y ;
 
@@ -29,7 +29,7 @@ public class Explode {
 
         g.drawImage(ResourceMgr.explodes[step++],eX,eY,null);
         if(step>=ResourceMgr.explodes.length)
-            gm.explodes.remove(this);
+            gm.gameObjects.remove(this);
     }
 
 }

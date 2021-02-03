@@ -4,7 +4,7 @@ import java.awt.*;
 
 import static com.tank.DIR.UP;
 
-public class Bullet {
+public class Bullet extends GameObject{
     int x, y;
     public static final int speed = 20;
     public static final int WIDTH = ResourceMgr.bulletU.getWidth();
@@ -30,7 +30,7 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        if(!living) gm.bullets.remove(this);
+        if(!living) gm.gameObjects.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
         switch (dir){
@@ -80,7 +80,7 @@ public class Bullet {
         if(rec.intersects(tank.rec)) {
             tank.die();
             this.die();
-            gm.explodes.add(new Explode(x,y,gm));
+            gm.gameObjects.add(new Explode(x,y,gm));
         }
     }
 

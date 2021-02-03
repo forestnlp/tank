@@ -5,7 +5,7 @@ import java.util.Random;
 
 import static com.tank.DIR.UP;
 
-public class Tank {
+public class Tank extends GameObject{
 
     private int x , y ;
 
@@ -27,7 +27,7 @@ public class Tank {
         this.group = group;
     }
 
-    GameModel gm;
+    public GameModel gm;
 
     boolean moving = true;
 
@@ -55,7 +55,7 @@ public class Tank {
 
 
     public void paint(Graphics g) {
-        if(!this.living) gm.tanks.remove(this);
+        if(!this.living) gm.gameObjects.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
         switch (dir){
