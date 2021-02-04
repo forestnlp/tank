@@ -5,7 +5,6 @@ import java.awt.*;
 import static com.tank.DIR.UP;
 
 public class Bullet extends GameObject{
-    int x, y;
     public static final int speed = 20;
     public static final int WIDTH = ResourceMgr.bulletU.getWidth();
     public static final int HEIGHT = ResourceMgr.bulletU.getHeight();
@@ -50,6 +49,16 @@ public class Bullet extends GameObject{
         }
         g.setColor(c);
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     private void move() {

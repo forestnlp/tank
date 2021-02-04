@@ -7,7 +7,6 @@ import static com.tank.DIR.UP;
 
 public class Tank extends GameObject{
 
-    private int x , y ;
     private int oldx , oldy ;
 
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
@@ -75,6 +74,16 @@ public class Tank extends GameObject{
         }
         g.setColor(c);
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     private void move() {
