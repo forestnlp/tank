@@ -15,6 +15,7 @@ public class Wall extends GameObject {
         this.w = w;
         this.h = h;
         this.rec = new Rectangle(x,y,w,h);
+        GameModel.getInstance().add(this);
     }
 
 

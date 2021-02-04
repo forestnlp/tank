@@ -28,8 +28,6 @@ public class Tank extends GameObject{
         this.group = group;
     }
 
-    public GameModel gm;
-
     boolean moving = true;
 
     static final int speed = 5;
@@ -38,16 +36,16 @@ public class Tank extends GameObject{
 
     private Random random = new Random();
 
-    public Tank(int x, int y, DIR dir, GameModel model,Group group) {
+    public Tank(int x, int y, DIR dir,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm = model;
         this.group = group;
         rec.x = this.x;
         rec.y = this.y;
         rec.width = WIDTH;
         rec.height = HEIGHT;
+        GameModel.getInstance().add(this);
         if(this.getGroup() == Group.bad)
             fireStrategy = new DefaultFireStrategy();
         else
@@ -56,7 +54,7 @@ public class Tank extends GameObject{
 
 
     public void paint(Graphics g) {
-        if(!this.living) gm.gameObjects.remove(this);
+        if(!this.living) GameModel.getInstance().gameObjects.remove(this);
         Color c = g.getColor();
         g.setColor(Color.red);
         switch (dir){

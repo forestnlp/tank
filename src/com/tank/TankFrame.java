@@ -12,7 +12,7 @@ public class TankFrame extends Frame {
 
     static final int GAME_WIDTH=1080,GAME_HEIGHT=960;
 
-    GameModel gm = new GameModel();
+    GameModel gm = GameModel.getInstance();
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);

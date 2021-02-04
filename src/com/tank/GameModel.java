@@ -9,10 +9,20 @@ import static com.tank.DIR.UP;
 
 public class GameModel {
 
-    private Tank myTank = new Tank(200,400,UP,this,Group.good);
+    private static  GameModel INSTANCE =  new GameModel();
+
+    static {
+        INSTANCE.init();
+    }
+
+    Tank myTank;
+
+    public static GameModel getInstance (){
+        return INSTANCE;
+    }
+
 
     List<GameObject> gameObjects = new ArrayList<>();
-
 
     ColliderChain colliderChain = new ColliderChain();
 
@@ -25,15 +35,22 @@ public class GameModel {
         gameObjects.remove(o);
     }
 
-    public GameModel() {
+    private GameModel() {
+
+    }
+
+    private  void init(){
+
         int initTankcount = Integer.parseInt((String)PropertyMgr.get("init_tank_num"));
 
+        myTank =  new Tank(200,400,UP,Group.good);
+
         for(int i=0;i<initTankcount;i++) {
-            add(new Tank(100+70*i,100,DOWN,this,Group.bad));
+            new Tank(100+70*i,100,DOWN,Group.bad);
         }
 
-        add(new Wall(350,250,200,50));
-        add(new Wall(400,400,50,200));
+        new Wall(350,250,200,50);
+        new Wall(400,400,50,200);
 
     }
 
