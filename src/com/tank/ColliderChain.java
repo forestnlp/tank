@@ -10,7 +10,9 @@ public class ColliderChain implements Collider{
     public ColliderChain() {
         colliders = new LinkedList<>();
         add(new BulletTankCollider());
+        add(new BulletWallCollider());
         add(new TankTankCollider());
+        add(new TankWallCollider());
     }
 
     //链条可以和链条进行组合

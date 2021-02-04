@@ -8,6 +8,7 @@ import static com.tank.DIR.UP;
 public class Tank extends GameObject{
 
     private int x , y ;
+    private int oldx , oldy ;
 
     public static final int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static final int HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -79,6 +80,9 @@ public class Tank extends GameObject{
     }
 
     private void move() {
+        oldx = x;
+        oldy = y;
+
         if (!moving) return;
 
         switch (dir) {
@@ -158,6 +162,11 @@ public class Tank extends GameObject{
 
     public void stop() {
         this.moving = false;
+    }
+
+    public void back(){
+        x = oldx;
+        y = oldy;
     }
 
 }
