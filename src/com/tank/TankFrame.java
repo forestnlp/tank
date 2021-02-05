@@ -73,6 +73,9 @@ public class TankFrame extends Frame {
             setMainTankDir();
         }
 
+        // 这就是观察者模式。观察者模式里有如下几个对象。
+        // 1、source，2、事件（包含source和事件基本信息） 3、监听对象
+        // source 生成事件，把自己注册进入事件，调用监听对象进行处理。
         @Override
         public void keyReleased(KeyEvent e) {
             int keyCode = e.getKeyCode();
