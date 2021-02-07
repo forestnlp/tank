@@ -1,6 +1,9 @@
 package com.tank;
 
 import java.awt.*;
+import java.util.Date;
+import  java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static com.tank.DIR.UP;
@@ -45,6 +48,8 @@ public class Tank extends GameObject{
         rec.width = WIDTH;
         rec.height = HEIGHT;
         GameModel.getInstance().add(this);
+        this.observerList.add(new TankFireConcreteObserver());
+        this.observerList.add(new TankFireLogObserver());
         if(this.getGroup() == Group.bad)
             fireStrategy = new DefaultFireStrategy();
         else
@@ -176,4 +181,10 @@ public class Tank extends GameObject{
         y = oldy;
     }
 
+    private List<TankFireObserver> observerList = new ArrayList<>();
+    public void handleFileKey() {
+        TankFireEvent event = new TankFireEvent(new Date(),this);
+        for(TankFireObserver observer:observerList)
+            observer.handle(event);
+    }
 }
