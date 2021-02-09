@@ -1,8 +1,9 @@
 package com.tank;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
     protected int x,y;
     public abstract void paint(Graphics g);
     public abstract int getWidth();

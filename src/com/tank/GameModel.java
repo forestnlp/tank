@@ -1,13 +1,14 @@
 package com.tank;
 
 import java.awt.*;
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
 import static com.tank.DIR.DOWN;
 import static com.tank.DIR.UP;
 
-public class GameModel {
+public class GameModel{
 
     private static  GameModel INSTANCE =  new GameModel();
 
@@ -70,5 +71,37 @@ public class GameModel {
 
     public Tank getMainTank() {
         return myTank;
+    }
+
+    public void save() {
+        try {
+            FileOutputStream fos = new FileOutputStream("tank.sav");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(myTank);
+            oos.writeObject(gameObjects);
+            oos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void load() {
+        try {
+            FileInputStream fis = new FileInputStream("tank.sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Object o1 = ois.readObject();
+            Object o2 = ois.readObject();
+            myTank = (Tank)o1;
+            gameObjects = (List<GameObject>)o2;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

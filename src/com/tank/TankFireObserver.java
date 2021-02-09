@@ -1,6 +1,8 @@
 package com.tank;
 
-public interface TankFireObserver {
+import java.io.Serializable;
+
+public interface TankFireObserver extends Serializable {
 
     void handle(TankFireEvent event);
 

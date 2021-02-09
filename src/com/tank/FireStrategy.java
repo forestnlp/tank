@@ -1,8 +1,9 @@
 package com.tank;
 
 
-import com.tank.Tank;
+import java.io.Serializable;
 
-public interface FireStrategy {
+public interface FireStrategy extends Serializable {
     public void fire(Tank tank);
+
 }
