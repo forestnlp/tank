@@ -5,8 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-public class TankJoinMsg {
-    int x,y;
+public class TankJoinMsg extends Msg {
+    int x, y;
     DIR dir;
     boolean moving;
     Group group;
@@ -34,11 +34,12 @@ public class TankJoinMsg {
         this.id = uuid;
     }
 
-    public byte[] toBytes(){
+    @Override
+    public byte[] toBytes() {
         ByteArrayOutputStream baos = null;
         DataOutputStream dos = null;
         byte[] bytes = null;
-        try{
+        try {
             baos = new ByteArrayOutputStream();
             dos = new DataOutputStream(baos);
 
@@ -52,18 +53,17 @@ public class TankJoinMsg {
             dos.writeLong(id.getLeastSignificantBits());
             dos.flush();
             bytes = baos.toByteArray();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            if(baos!=null) {
+        } finally {
+            if (baos != null) {
                 try {
                     baos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if(dos!=null) {
+            if (dos != null) {
                 try {
                     dos.close();
                 } catch (IOException e) {
@@ -108,5 +108,14 @@ public class TankJoinMsg {
                 ", group=" + group +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public void handle() {
+        if (this.id.equals(TankFrame.INSTANCE.getMainTank().getid()) || TankFrame.INSTANCE.findbyUUID(this.id) != null)
+            return;
+        Tank tank = new Tank(this);
+        TankFrame.INSTANCE.addTank(tank);
+        Client.INSTANCE.send(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
     }
 }

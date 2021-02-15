@@ -50,14 +50,13 @@ public class Client {
     }
 
     public void send(TankJoinMsg msg) {
-        System.out.println("SEND:" + msg);
         channel.writeAndFlush(msg);
     }
 
     public void closeConnect() {
-		/*this.send("_bye_");
-		//channel.close();
-*/	}
+		//this.send("_bye_");
+		channel.close();
+	}
 }
 
 class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
@@ -72,10 +71,7 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
 class ClientHandler extends SimpleChannelInboundHandler<TankJoinMsg> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TankJoinMsg msg) throws Exception {
-        if(msg.id.equals(TankFrame.INSTANCE.getMainTank().getid())||TankFrame.INSTANCE.findbyUUID(msg.id)!=null) return;
-        Tank tank = new Tank(msg);
-        TankFrame.INSTANCE.addTank(tank);
-        ctx.writeAndFlush(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
+        msg.handle();
     }
 
     @Override
