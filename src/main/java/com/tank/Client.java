@@ -72,8 +72,9 @@ class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
 class ClientHandler extends SimpleChannelInboundHandler<TankJoinMsg> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TankJoinMsg msg) throws Exception {
-        if(msg.id.equals(TankFrame.INSTANCE.getMainTank().getid())) return;
-        System.out.println(msg);
+        if(msg.id.equals(TankFrame.INSTANCE.getMainTank().getid())||TankFrame.INSTANCE.findbyUUID(msg.id)!=null) return;
+        Tank tank = new Tank(msg);
+        TankFrame.INSTANCE.addTank(tank);
         ctx.writeAndFlush(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
     }
 

@@ -5,8 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 import static com.tank.DIR.*;
 
@@ -14,9 +13,17 @@ public class TankFrame extends Frame {
     public static final TankFrame INSTANCE = new TankFrame();
     Random random = new Random();
     Tank myTank = new Tank(random.nextInt(GAME_WIDTH),random.nextInt(GAME_HEIGHT),UP,this,Group.good);
-    java.util.List<Tank> tanks = new LinkedList<>();
+    Map<UUID,Tank> tanks = new HashMap<>();
     java.util.List<Bullet> bullets = new LinkedList<>();
     java.util.List<Explode> explodes = new LinkedList<>();
+
+    public void addTank(Tank t) {
+        tanks.put(t.getid(), t);
+    }
+
+    public Tank findTankByUUID(UUID id) {
+        return tanks.get(id);
+    }
 
     static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
@@ -44,8 +51,7 @@ public class TankFrame extends Frame {
         for(int i=0;i<bullets.size();i++)
             bullets.get(i).paint(g);
 
-        for(int i=0;i<tanks.size();i++)
-            tanks.get(i).paint(g);
+        tanks.values().stream().forEach((e)->e.paint(g));
 
         for(int i=0;i<bullets.size();i++)
             for(int k=0;k<tanks.size();k++)
@@ -68,6 +74,10 @@ public class TankFrame extends Frame {
         gOffScreen.setColor(c);
         paint(gOffScreen);
         g.drawImage(offScreenImage,0,0,null);
+    }
+
+    public Tank findbyUUID(UUID id) {
+        return tanks.get(id);
     }
 
     private class MyKeyListner extends KeyAdapter {

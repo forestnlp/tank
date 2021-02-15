@@ -22,6 +22,19 @@ public class Tank {
 
     DIR dir = UP;
 
+    public Tank(TankJoinMsg msg) {
+        this.x = msg.x;
+        this.y = msg.y;
+        this.dir = msg.dir;
+        this.moving = msg.moving;
+        this.group = msg.group;
+        this.id = msg.id;
+        rec.x = this.x;
+        rec.y = this.y;
+        rec.width = WIDTH;
+        rec.height = HEIGHT;
+    }
+
     public Group getGroup() {
         return group;
     }
