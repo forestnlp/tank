@@ -6,17 +6,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedList;
+import java.util.Random;
 
 import static com.tank.DIR.*;
 
 public class TankFrame extends Frame {
-
-    Tank myTank = new Tank(200,400,UP,this,Group.good);
+    public static final TankFrame INSTANCE = new TankFrame();
+    Random random = new Random();
+    Tank myTank = new Tank(random.nextInt(GAME_WIDTH),random.nextInt(GAME_HEIGHT),UP,this,Group.good);
     java.util.List<Tank> tanks = new LinkedList<>();
     java.util.List<Bullet> bullets = new LinkedList<>();
     java.util.List<Explode> explodes = new LinkedList<>();
 
-    static final int GAME_WIDTH=1080,GAME_HEIGHT=960;
+    static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
     public TankFrame() throws HeadlessException {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -68,7 +70,7 @@ public class TankFrame extends Frame {
         g.drawImage(offScreenImage,0,0,null);
     }
 
-    class MyKeyListner extends KeyAdapter {
+    private class MyKeyListner extends KeyAdapter {
         boolean U =false, D=false, L=false, R=false;
         @Override
         public void keyPressed(KeyEvent e) {
@@ -127,5 +129,9 @@ public class TankFrame extends Frame {
                 myTank.setMoving(true);
             }
         }
+    }
+
+    public Tank getMainTank(){
+        return myTank;
     }
 }

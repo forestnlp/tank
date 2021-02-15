@@ -15,11 +15,21 @@ public class TankJoinMsg {
     public TankJoinMsg() {
     }
 
-    public TankJoinMsg(int x, int y, DIR dir, boolean ismoving, Group group, UUID uuid) {
+    public TankJoinMsg(Tank tank) {
+        this.x = tank.getX();
+        this.y = tank.getY();
+        this.dir = tank.dir;
+        this.moving = tank.moving;
+        this.group = tank.getGroup();
+        this.id = tank.getid();
+    }
+
+
+    public TankJoinMsg(int x, int y, DIR dir, boolean moving, Group group, UUID uuid) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.moving = ismoving;
+        this.moving = moving;
         this.group = group;
         this.id = uuid;
     }
@@ -62,5 +72,41 @@ public class TankJoinMsg {
             }
         }
         return bytes;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public DIR getDir() {
+        return dir;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "TankJoinMsg{" +
+                "x=" + x +
+                ", y=" + y +
+                ", dir=" + dir +
+                ", moving=" + moving +
+                ", group=" + group +
+                ", id=" + id +
+                '}';
     }
 }

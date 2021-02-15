@@ -3,7 +3,8 @@ package com.tank;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        TankFrame frame = new TankFrame();
+        TankFrame frame = TankFrame.INSTANCE;
+        frame.setVisible(true);
 
 //        int initTankcount = Integer.parseInt((String)PropertyMgr.get("init_tank_num"));
 //
@@ -15,9 +16,18 @@ public class Main {
             new Audio("audio/war1.wav").loop();
         }).start();
 
-        while (true){
-            Thread.sleep(50);
-            frame.repaint();
-        }
+        new Thread(()->{
+            while (true){
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                frame.repaint();
+            }
+        }).start();
+
+        Client c = Client.INSTANCE;
+        c.connect();
     }
 }

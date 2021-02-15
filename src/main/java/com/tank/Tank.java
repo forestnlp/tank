@@ -2,6 +2,7 @@ package com.tank;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.UUID;
 
 import static com.tank.DIR.UP;
 
@@ -14,6 +15,8 @@ public class Tank {
 
     private boolean living = true;
     private Group group;
+
+    private UUID id = UUID.randomUUID();
 
     Rectangle rec = new Rectangle();
 
@@ -56,7 +59,10 @@ public class Tank {
     public void paint(Graphics g) {
         if(!this.living) frame.tanks.remove(this);
         Color c = g.getColor();
-        g.setColor(Color.red);
+        g.setColor(Color.YELLOW);
+        g.drawString(id.toString(), this.x, this.y - 20);
+        g.drawString("live=" + living, x, y-10);
+        g.setColor(c);
         switch (dir){
             case LEFT:
                 g.drawImage(this.group==Group.good?ResourceMgr.goodTankL:ResourceMgr.badTankL,x,y,null);
@@ -73,7 +79,6 @@ public class Tank {
             default:
                 break;
         }
-        g.setColor(c);
         move();
     }
 
@@ -154,5 +159,9 @@ public class Tank {
 
     public void die() {
         this.living=false;
+    }
+
+    public UUID getid() {
+        return id;
     }
 }
