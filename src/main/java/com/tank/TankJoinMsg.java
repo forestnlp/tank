@@ -1,11 +1,10 @@
 package com.tank;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.UUID;
 
 public class TankJoinMsg extends Msg {
+
     int x, y;
     DIR dir;
     boolean moving;
@@ -34,6 +33,31 @@ public class TankJoinMsg extends Msg {
         this.id = uuid;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public DIR getDir() {
+        return dir;
+    }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+
     @Override
     public byte[] toBytes() {
         ByteArrayOutputStream baos = null;
@@ -42,6 +66,8 @@ public class TankJoinMsg extends Msg {
         try {
             baos = new ByteArrayOutputStream();
             dos = new DataOutputStream(baos);
+
+            //write msgType
 
             //write
             dos.writeInt(x);
@@ -73,29 +99,30 @@ public class TankJoinMsg extends Msg {
         }
         return bytes;
     }
-
-    public int getX() {
-        return x;
+    @Override
+    public void parse(byte[] bytes) {
+        DataInputStream dis = new DataInputStream(new ByteArrayInputStream(bytes));
+        try {
+            this.x = dis.readInt();
+            this.y = dis.readInt();
+            this.dir = DIR.values()[dis.readInt()];
+            this.moving = dis.readBoolean();
+            this.group = Group.values()[dis.readInt()];
+            this.id = new UUID(dis.readLong(),dis.readLong());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                dis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public DIR getDir() {
-        return dir;
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public UUID getId() {
-        return id;
+    @Override
+    public MsgType getMsgType() {
+        return MsgType.TankJoin;
     }
 
     @Override
@@ -118,4 +145,6 @@ public class TankJoinMsg extends Msg {
         TankFrame.INSTANCE.addTank(tank);
         Client.INSTANCE.send(new TankJoinMsg(TankFrame.INSTANCE.getMainTank()));
     }
+
+
 }

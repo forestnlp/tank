@@ -1,4 +1,5 @@
 package com.tank;
 
-public class MsgType {
+public enum MsgType {
+    TankJoin, TankDirChanged, TankStop, TankStartMoving, BulletNew, TankDie;
 }
