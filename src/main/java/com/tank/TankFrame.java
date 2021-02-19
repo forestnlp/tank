@@ -132,7 +132,7 @@ public class TankFrame extends Frame {
         private void setMainTankDir() {
             if(!U&&!D&&!L&&!R) {
                 myTank.setMoving(false);
-                Client.INSTANCE.send(new TankStopMsg(myTank));
+                Client.INSTANCE.send(new TankStopMsg(getMainTank()));
             }
             else {
                 if (U) myTank.setDir(UP);
@@ -140,7 +140,7 @@ public class TankFrame extends Frame {
                 if (L) myTank.setDir(LEFT);
                 if (R) myTank.setDir(RIGHT);
                 myTank.setMoving(true);
-                Client.INSTANCE.send(new TankStartMovingMsg(myTank.getid(),myTank.getX(),myTank.getY(),myTank.getDir()));
+                Client.INSTANCE.send(new TankStartMovingMsg(getMainTank()));
             }
         }
     }
