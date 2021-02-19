@@ -62,8 +62,8 @@ public class Client {
 class ClientChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
-        socketChannel.pipeline().addLast(new TankJoinMsgEncoder())
-                .addLast(new TankJoinMsgDecoder())
+        socketChannel.pipeline().addLast(new MsgEncoder())
+                .addLast(new MsgDecoder())
                 .addLast(new ClientHandler());
     }
 }

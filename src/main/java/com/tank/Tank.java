@@ -45,7 +45,7 @@ public class Tank {
 
     TankFrame frame;
 
-    boolean moving = true;
+    boolean moving = false;
 
     static final int speed = 5;
 

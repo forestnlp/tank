@@ -26,8 +26,8 @@ public class Server {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new TankJoinMsgEncoder())
-                                    .addLast(new TankJoinMsgDecoder())
+                            pipeline.addLast(new MsgEncoder())
+                                    .addLast(new MsgDecoder())
                                     .addLast(new ServerChildHandler());
                         }
                     })

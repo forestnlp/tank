@@ -137,6 +137,7 @@ public class TankFrame extends Frame {
                 if (L) myTank.setDir(LEFT);
                 if (R) myTank.setDir(RIGHT);
                 myTank.setMoving(true);
+                Client.INSTANCE.send(new TankStartMovingMsg(myTank.getid(),myTank.getX(),myTank.getY(),myTank.getDir()));
             }
         }
     }
